@@ -1,0 +1,26 @@
+[2023-12-16T12:00:18.867+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_ops.transform manual__2023-12-16T11:57:21.843732+00:00 [queued]>
+[2023-12-16T12:00:18.871+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_ops.transform manual__2023-12-16T11:57:21.843732+00:00 [queued]>
+[2023-12-16T12:00:18.871+0000] {taskinstance.py:1361} INFO - Starting attempt 2 of 2
+[2023-12-16T12:00:18.876+0000] {taskinstance.py:1382} INFO - Executing <Task(_PythonDecoratedOperator): transform> on 2023-12-16 11:57:21.843732+00:00
+[2023-12-16T12:00:18.880+0000] {standard_task_runner.py:57} INFO - Started process 181 to run task
+[2023-12-16T12:00:18.883+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'data_ops', 'transform', 'manual__2023-12-16T11:57:21.843732+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/workflows_2.py', '--cfg-path', '/tmp/tmpijboiz6m']
+[2023-12-16T12:00:18.884+0000] {standard_task_runner.py:85} INFO - Job 27: Subtask transform
+[2023-12-16T12:00:18.931+0000] {task_command.py:416} INFO - Running <TaskInstance: data_ops.transform manual__2023-12-16T11:57:21.843732+00:00 [running]> on host 80e3f3cdf7f6
+[2023-12-16T12:00:19.008+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='data_ops' AIRFLOW_CTX_TASK_ID='transform' AIRFLOW_CTX_EXECUTION_DATE='2023-12-16T11:57:21.843732+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-12-16T11:57:21.843732+00:00'
+[2023-12-16T12:00:19.029+0000] {python.py:194} INFO - Done. Returned value was:      empty_slots  free_bikes  ... online  uid
+0             25           7  ...   True  251
+1             11          14  ...   True  254
+2             18           6  ...   True  267
+3              4          14  ...   True   54
+4             24           1  ...   True  236
+..           ...         ...  ...    ...  ...
+502           29           1  ...   True  205
+503           23          10  ...   True  213
+504           13          20  ...   True  346
+505           12          11  ...   True   12
+506           15          17  ...   True  247
+
+[507 rows x 12 columns]
+[2023-12-16T12:00:19.138+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=data_ops, task_id=transform, execution_date=20231216T115721, start_date=20231216T120018, end_date=20231216T120019
+[2023-12-16T12:00:19.185+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-12-16T12:00:19.199+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
