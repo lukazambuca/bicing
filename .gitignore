@@ -1,0 +1,5 @@
+#hide Google big query service account credentials
+airflow-docker/*.json
+
+#hide virtual enc
+bicing-env/
