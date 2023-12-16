@@ -3,3 +3,6 @@ airflow-docker/*.json
 
 #hide virtual enc
 bicing-env/
+
+#hide airflow logs
+airflow-docker/logs

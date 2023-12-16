@@ -98,7 +98,7 @@ def _api_etl():
         )
         job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
 
-        print("Success" )
+        print("Success")
 
     # [END load]
 
