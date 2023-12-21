@@ -5,4 +5,4 @@ airflow-docker/*.json
 bicing-env/
 
 #hide airflow logs
-airflow-docker/logs
+airflow-docker/logs/
