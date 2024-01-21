@@ -2,17 +2,17 @@
 
 # [START import_module]
 import json
-import pandas as pd
+import pandas
 import os
-import pyarrow
 import requests
 from google.cloud import bigquery
 
 
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
-from airflow.operators.python import PythonOperator, BranchPythonOperator
-from airflow.operators.bash import BashOperator
+from airflow.providers.dbt.cloud.operators.dbt import DbtCloudRunJobOperator
+
+
 
 # [END import_module]
 
@@ -21,6 +21,7 @@ from airflow.operators.bash import BashOperator
 # You can override them on a per-task basis during operator initialization
 default_args = {
     'owner': 'airflow',
+    "catch_up": False
 }
 # [END default_args]
 
@@ -28,17 +29,17 @@ default_args = {
 # [START instantiate_dag]
 @dag(dag_id="data_ops",
     description="ETL orchestration",
-    default_args=default_args, 
-    schedule_interval='@daily', 
+    default_args=default_args,
+    schedule='@daily',
     start_date=days_ago(2),
-     tags=['example'])
+    tags=['bicing_project'])
 
 def _api_etl():
     """
     ### ETL
     This is a simple ETL data pipeline using three simple tasks for Extract, Transform, and Load.
     It extracts the data from an API (request), Transforms the data into a Pandas dataframe,
-    and then loads the data to Google Big Query 
+    and then loads the data to Google Big Query
     """
     # [END instantiate_dag]
 
@@ -54,7 +55,7 @@ def _api_etl():
         response = requests.get(base_url)
 
         if response.status_code == 200:
-            bike_data_json = response.json() 
+            bike_data_json = response.json()
             return bike_data_json  # returns the response in JSON format
         else:
             return f"Error: {response.status_code}"
@@ -63,16 +64,16 @@ def _api_etl():
 
     # [START transform]
     @task(multiple_outputs=False)
-    def transform(bike_data_json: json) -> pd.DataFrame:
+    def transform(bike_data_json: json) -> pandas.DataFrame:
         """
         #### Transform task
         A simple Transform task which takes in the collection of bicing station data and
         mostly cleans the data.
         """
-        df = pd.json_normalize(bike_data_json['network']['stations'])
+        df = pandas.json_normalize(bike_data_json['network']['stations'])
         df['id'] = df['id'].apply(lambda row: str(row))
         df['name'] = df['name'].apply(lambda row: str(row))
-        df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601')
+        df['timestamp'] = pandas.to_datetime(df['timestamp'], format='ISO8601')
         df.rename(columns=lambda x: x.replace("extra.", ""), inplace=True)
 
         return df
@@ -81,7 +82,7 @@ def _api_etl():
 
     # [START load]
     @task()
-    def load(df: pd.DataFrame):
+    def load(df: pandas.DataFrame):
         """
         #### Load task
         A simple Load task which takes in the result of the Transform task and
